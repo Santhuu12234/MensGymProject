@@ -21,7 +21,7 @@ const ProgressPage = ({ mode }) => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/progress/${userEmail}`);
+      const res = await axios.get(`https://gymmernproject-backend.onrender.com/api/progress/${userEmail}`);
       setData(res.data);
     } catch (err) {
       console.error('Error fetching progress:', err);
@@ -52,7 +52,7 @@ const ProgressPage = ({ mode }) => {
       <form className="progress-form" onSubmit={async (e) => {
         e.preventDefault();
         try {
-          await axios.post('https://your-backend.onrender.com/api/progress', {
+          await axios.post('https://gymmernproject-backend.onrender.com/api/progress', {
             ...form,
             name: userName,
             email: userEmail,

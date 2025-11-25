@@ -19,7 +19,7 @@ const Testimonials = ({ darkMode }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    axios.get("https://your-backend.onrender.com/api/testimonials").then((res) => {
+    axios.get("https://gymmernproject-backend.onrender.com/api/testimonials").then((res) => {
       setTestimonials(res.data);
     });
 
@@ -53,8 +53,8 @@ const Testimonials = ({ darkMode }) => {
     const fd = new FormData();
     Object.keys(form).forEach((key) => fd.append(key, form[key]));
 
-    await axios.post("https://your-backend.onrender.com/api/testimonials", fd);
-    const updated = await axios.get("https://your-backend.onrender.com/api/testimonials");
+    await axios.post("https://gymmernproject-backend.onrender.com/api/testimonials", fd);
+    const updated = await axios.get("https://gymmernproject-backend.onrender.com/api/testimonials");
     setTestimonials(updated.data);
     setForm({ name: "", role: "", feedback: "", rating: 5, image: null });
     localStorage.removeItem("testimonialForm");

@@ -18,7 +18,7 @@ const [currentWarning, setCurrentWarning] = useState(null);
 
 const fetchWarning = async () => {
   try {
-    const res = await axios.get("https://your-backend.onrender.com/api/warning");
+    const res = await axios.get("https://gymmernproject-backend.onrender.com/api/warning");
     setCurrentWarning(res.data);
   } catch {
     setCurrentWarning(null);
@@ -33,9 +33,9 @@ useEffect(() => {
   const fetchAll = async () => {
     try {
       const [uRes, cRes, bRes] = await Promise.all([
-        axios.get("https://your-backend.onrender.com/api/admin/users"),
-        axios.get("https://your-backend.onrender.com/admin/contacts"),
-        axios.get("https://your-backend.onrender.com/api/admin/bookings")
+        axios.get("https://gymmernproject-backend.onrender.com/api/admin/users"),
+        axios.get("https://gymmernproject-backend.onrender.com/admin/contacts"),
+        axios.get("https://gymmernproject-backend.onrender.com/api/admin/bookings")
       ]);
       setUsers(uRes.data);
       setContacts(cRes.data);
@@ -49,7 +49,7 @@ useEffect(() => {
     if (!dateObj) return;
     const formattedDate = dateObj.toDateString();
     try {
-      const res = await axios.get("https://your-backend.onrender.com/api/admin/bookings", {
+      const res = await axios.get("https://gymmernproject-backend.onrender.com/api/admin/bookings", {
         params: { date: formattedDate }
       });
       setBookings(res.data);
@@ -262,7 +262,7 @@ useEffect(() => {
       onSubmit={async (e) => {
         e.preventDefault();
         if (!newWarning.trim()) return;
-        await axios.post("https://your-backend.onrender.com/api/warning", { message: newWarning });
+        await axios.post("https://gymmernproject-backend.onrender.com/api/warning", { message: newWarning });
         alert("Warning added!");
         setNewWarning("");
         fetchWarning();

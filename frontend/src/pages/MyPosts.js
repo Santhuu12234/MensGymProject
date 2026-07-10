@@ -6,7 +6,7 @@ function MyPosts({ darkMode }) {
   const userId = localStorage.getItem('userId') || 'user1';
 
   useEffect(() => {
-    axios.get(`https://your-backend.onrender.com/api/reels/myposts/${userId}`).then(res => setReels(res.data));
+    axios.get(`/api/reels/myposts/${userId}`).then(res => setReels(res.data));
   }, []);
 
   return (

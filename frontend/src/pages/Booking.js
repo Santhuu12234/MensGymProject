@@ -25,7 +25,7 @@ import T_BarRowMachine from "./images/T_BarRowMachine.jpg";
 import Dumbells from "./images/Dumbells.jpg";
 
 // 🎯 Backend server URL (change if deployed)
-const SERVER = "https://gymmernproject-backend.onrender.com/api/booking";
+const SERVER = "http://localhost:5000/api/booking";
 
 // 🏋️ Equipment list with descriptions
 const equipments = [

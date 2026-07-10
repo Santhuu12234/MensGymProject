@@ -109,7 +109,7 @@ const Contact = ({ darkMode }) => {
     return;
   }
 
-    fetch("https://gymmernproject-backend.onrender.com/api/contact", {
+    fetch("http://localhost:5000/api/contact", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

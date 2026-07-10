@@ -21,7 +21,7 @@ const [redirectPath, setRedirectPath] = useState("");
     if (!warningMessageElement) return;
 
     try {
-      const res = await fetch("https://gymmernproject-backend.onrender.com/api/warning");
+      const res = await fetch("http://localhost:5000/api/warning");
       
       if (!res.ok) {
         warningMessageElement.innerHTML = "No gym warning message available.";

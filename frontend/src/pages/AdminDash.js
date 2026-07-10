@@ -3,7 +3,7 @@ import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./AdminDash.css";
-
+import api from "../axiosConfig";
 
 const AdminDash = ({ darkMode }) => {
   const [users, setUsers] = useState([]);
@@ -18,7 +18,11 @@ const [currentWarning, setCurrentWarning] = useState(null);
 
 const fetchWarning = async () => {
   try {
+<<<<<<< HEAD
     const res = await axios.get("http://localhost:5000/api/warning");
+=======
+    const res = await axios.get("/api/warning");
+>>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
     setCurrentWarning(res.data);
   } catch {
     setCurrentWarning(null);
@@ -33,9 +37,15 @@ useEffect(() => {
   const fetchAll = async () => {
     try {
       const [uRes, cRes, bRes] = await Promise.all([
+<<<<<<< HEAD
         axios.get("http://localhost:5000/api/admin/users"),
         axios.get("http://localhost:5000/api/admin/contacts"),
         axios.get("http://localhost:5000/api/admin/bookings")
+=======
+        axios.get("/api/admin/users"),
+        axios.get("/admin/contacts"),
+        axios.get("/api/admin/bookings")
+>>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
       ]);
       setUsers(uRes.data);
       setContacts(cRes.data);
@@ -49,7 +59,11 @@ useEffect(() => {
     if (!dateObj) return;
     const formattedDate = dateObj.toDateString();
     try {
+<<<<<<< HEAD
       const res = await axios.get("http://localhost:5000/api/admin/bookings", {
+=======
+      const res = await axios.get("/api/admin/bookings", {
+>>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
         params: { date: formattedDate }
       });
       setBookings(res.data);
@@ -262,7 +276,11 @@ useEffect(() => {
       onSubmit={async (e) => {
         e.preventDefault();
         if (!newWarning.trim()) return;
+<<<<<<< HEAD
         await axios.post("http://localhost:5000/api/warning", { message: newWarning });
+=======
+        await axios.post("/api/warning", { message: newWarning });
+>>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
         alert("Warning added!");
         setNewWarning("");
         fetchWarning();
@@ -298,7 +316,11 @@ useEffect(() => {
           <button
             
             onClick={async () => {
+<<<<<<< HEAD
               await axios.delete("http://localhost:5000/api/warning");
+=======
+              await axios.delete("/api/warning");
+>>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
               setCurrentWarning(null);
               alert("Warning deleted.");
             }}

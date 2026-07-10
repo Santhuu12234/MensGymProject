@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import './AdminLogin.css';
-
+import api from "../axiosConfig";
 function AdminLogin({ darkMode }) {
   const location = useLocation();
   const navigate = useNavigate();

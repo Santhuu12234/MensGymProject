@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './ProgressPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import api from "../axiosConfig";
 import {
   faDumbbell,
   faWeight,
@@ -21,7 +22,7 @@ const ProgressPage = ({ mode }) => {
 
   const fetchData = async () => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/progress/${userEmail}`);
+      const res = await axios.get(`/api/progress/${userEmail}`);
       setData(res.data);
     } catch (err) {
       console.error('Error fetching progress:', err);
@@ -52,7 +53,11 @@ const ProgressPage = ({ mode }) => {
       <form className="progress-form" onSubmit={async (e) => {
         e.preventDefault();
         try {
+<<<<<<< HEAD
           await axios.post('http://localhost:5000/api/progress', {
+=======
+          await axios.post('/api/progress', {
+>>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
             ...form,
             name: userName,
             email: userEmail,

@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import './Contact.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
+import api from "../axiosConfig";
 
 const warningMessages = [
   "WARNING: Messages are monitored...",
@@ -109,7 +110,11 @@ const Contact = ({ darkMode }) => {
     return;
   }
 
+<<<<<<< HEAD
     fetch("http://localhost:5000/api/contact", {
+=======
+    fetch("/api/contact", {
+>>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
       method: "POST",
       headers: {
         "Content-Type": "application/json",

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import './Access.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSignInAlt, faLock, faCheckCircle, faQrcode } from '@fortawesome/free-solid-svg-icons';
+import api from "../axiosConfig";
 
 function Access({ darkMode }) {
   useEffect(() => {

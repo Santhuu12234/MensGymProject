@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./Testimonials.css";
 import { useNavigate } from "react-router-dom";
+import api from "../axiosConfig";
 
 const Testimonials = ({ darkMode }) => {
   const [testimonials, setTestimonials] = useState([]);
@@ -19,7 +20,11 @@ const Testimonials = ({ darkMode }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
+<<<<<<< HEAD
     axios.get("http://localhost:5000/api/testimonials").then((res) => {
+=======
+    axios.get("/api/testimonials").then((res) => {
+>>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
       setTestimonials(res.data);
     });
 
@@ -53,8 +58,13 @@ const Testimonials = ({ darkMode }) => {
     const fd = new FormData();
     Object.keys(form).forEach((key) => fd.append(key, form[key]));
 
+<<<<<<< HEAD
     await axios.post("http://localhost:5000/api/testimonials", fd);
     const updated = await axios.get("http://localhost:5000/api/testimonials");
+=======
+    await axios.post("/api/testimonials", fd);
+    const updated = await axios.get("/api/testimonials");
+>>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
     setTestimonials(updated.data);
     setForm({ name: "", role: "", feedback: "", rating: 5, image: null });
     localStorage.removeItem("testimonialForm");

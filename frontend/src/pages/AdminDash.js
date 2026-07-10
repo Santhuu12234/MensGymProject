@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React, { useEffect, useState, useCallback } from "react";
+// axios import removed; using api instance
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import "./AdminDash.css";
@@ -14,38 +14,28 @@ const AdminDash = ({ darkMode }) => {
   const [activeTab, setActiveTab] = useState("users");
   const [selectedImage, setSelectedImage] = useState(null);
   const [newWarning, setNewWarning] = useState("");
-const [currentWarning, setCurrentWarning] = useState(null);
+  const [currentWarning, setCurrentWarning] = useState(null);
 
-const fetchWarning = async () => {
-  try {
-<<<<<<< HEAD
-    const res = await axios.get("http://localhost:5000/api/warning");
-=======
-    const res = await axios.get("/api/warning");
->>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
-    setCurrentWarning(res.data);
-  } catch {
-    setCurrentWarning(null);
-  }
-};
+  const fetchWarning = useCallback(async () => {
+    try {
+      const res = await api.get("/api/warning");
+      setCurrentWarning(res.data);
+    } catch {
+      setCurrentWarning(null);
+    }
+  }, []);
 
-useEffect(() => {
-  fetchWarning();
-}, []);
+  useEffect(() => {
+    fetchWarning();
+  }, [fetchWarning]);
 
 
-  const fetchAll = async () => {
+  const fetchAll = useCallback(async () => {
     try {
       const [uRes, cRes, bRes] = await Promise.all([
-<<<<<<< HEAD
-        axios.get("http://localhost:5000/api/admin/users"),
-        axios.get("http://localhost:5000/api/admin/contacts"),
-        axios.get("http://localhost:5000/api/admin/bookings")
-=======
-        axios.get("/api/admin/users"),
-        axios.get("/admin/contacts"),
-        axios.get("/api/admin/bookings")
->>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
+        api.get("/api/admin/users"),
+        api.get("/admin/contacts"),
+        api.get("/api/admin/bookings")
       ]);
       setUsers(uRes.data);
       setContacts(cRes.data);
@@ -53,17 +43,13 @@ useEffect(() => {
     } catch {
       setError("Error loading data");
     }
-  };
+  }, []);
 
-  const fetchByDate = async (dateObj) => {
+  const fetchByDate = useCallback(async (dateObj) => {
     if (!dateObj) return;
     const formattedDate = dateObj.toDateString();
     try {
-<<<<<<< HEAD
-      const res = await axios.get("http://localhost:5000/api/admin/bookings", {
-=======
-      const res = await axios.get("/api/admin/bookings", {
->>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
+      const res = await api.get("/api/admin/bookings", {
         params: { date: formattedDate }
       });
       setBookings(res.data);
@@ -71,12 +57,12 @@ useEffect(() => {
     } catch {
       setError("Error filtering bookings");
     }
-  };
+  }, []);
 
   useEffect(() => {
     fetchAll();
     fetchByDate(new Date());
-  }, []);
+  }, [fetchAll, fetchByDate]);
 
   const equipmentList = [...new Set(bookings.map(b => b.equipment))].sort();
 
@@ -276,11 +262,7 @@ useEffect(() => {
       onSubmit={async (e) => {
         e.preventDefault();
         if (!newWarning.trim()) return;
-<<<<<<< HEAD
-        await axios.post("http://localhost:5000/api/warning", { message: newWarning });
-=======
-        await axios.post("/api/warning", { message: newWarning });
->>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
+        await api.post("/api/warning", { message: newWarning });
         alert("Warning added!");
         setNewWarning("");
         fetchWarning();
@@ -316,11 +298,7 @@ useEffect(() => {
           <button
             
             onClick={async () => {
-<<<<<<< HEAD
-              await axios.delete("http://localhost:5000/api/warning");
-=======
-              await axios.delete("/api/warning");
->>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
+              await api.delete("/api/warning");
               setCurrentWarning(null);
               alert("Warning deleted.");
             }}

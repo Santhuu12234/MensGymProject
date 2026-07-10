@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
@@ -26,11 +26,7 @@ import T_BarRowMachine from "./images/T_BarRowMachine.jpg";
 import Dumbells from "./images/Dumbells.jpg";
 
 // 🎯 Backend server URL (change if deployed)
-<<<<<<< HEAD
-const SERVER = "http://localhost:5000/api/booking";
-=======
 const SERVER = "/api/booking";
->>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
 
 // 🏋️ Equipment list with descriptions
 const equipments = [
@@ -178,8 +174,8 @@ const Booking = ({ darkMode }) => {
     // 🔁 Fetch existing bookings from MongoDB
     const fetchBookings = async () => {
       try {
-        const res = await fetch(SERVER);
-        const data = await res.json();
+        const res = await api.get("/booking");
+        const data = res.data;
         const booked = {};
         data.forEach((item) => {
           booked[`${item.equipment}-${item.slot}`] = true;
@@ -293,15 +289,7 @@ const Booking = ({ darkMode }) => {
 
                       // 📝 Save booking to database
                       const email = localStorage.getItem("email");
-                      await fetch(SERVER, {
-                        method: "POST",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({
-                          email,
-                          equipment: selectedEquipment,
-                          slot: slot,
-                        }),
-                      });
+                      await api.post("/booking", { email, equipment: selectedEquipment, slot: slot });
                     }
                   }}
                   disabled={isBooked}

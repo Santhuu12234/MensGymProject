@@ -20,7 +20,7 @@ import ProgressPage from './pages/ProgressPage';
 import MealPlans from "./pages/MealPlans";
 import EquipmentPage from "./pages/EquipmentPage";
 import QrScanner from './pages/QrScanner';
-import NavBar from './components/Navbar';
+
 import Vedios from "./pages/Vedios";
 import AdminDash from './pages/AdminDash';
 import CertifiedTrainers from './pages/CertifiedTrainers';
@@ -61,7 +61,7 @@ const App = () => {
           <Route path="/login" element={<Login darkMode={darkMode} />} />
           <Route path="/bmi" element={<BmiCalculator darkMode={darkMode} />} /> {/* BMI route */}
           <Route path="/booking" element={<Booking darkMode={darkMode} />} />
-          <Route path="/admin-login" element={<AdminLogin darkMode={darkMode} />} />
+
           <Route path="/Faqs" element={<Faqs darkMode={darkMode} />} />
           <Route path="/DailyWorkoutPlan" element={<DailyWorkoutPlan darkMode={darkMode} />} />
           <Route path="/Access" element={<Access darkMode={darkMode} />} />
@@ -71,7 +71,7 @@ const App = () => {
           <Route path="/trainers" element={<CertifiedTrainers darkMode={darkMode} />} />
           <Route path="/QrScanner" element={<QrScanner darkMode={darkMode} />} />
           <Route path="/Vedios" element={<Vedios darkMode={darkMode} />} />
-          <Route path="/admin-login" element={<AdminLogin darkMode={darkMode} />} />
+
           <Route path="/admin/dashboard" element={<AdminDash darkMode={darkMode} />} />
           <Route path="/ProgressPage" element={<ProgressPage mode={darkMode ? "dark" : "light"} />} />
         </Routes>

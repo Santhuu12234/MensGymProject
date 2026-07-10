@@ -5,7 +5,6 @@ import {
   faSun,
   faBars,
   faXmark,
-  faDumbbell,
   faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { Link, useNavigate, useLocation } from "react-router-dom";

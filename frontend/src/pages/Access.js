@@ -2,8 +2,8 @@
 import React, { useEffect } from 'react';
 import './Access.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSignInAlt, faLock, faCheckCircle, faQrcode } from '@fortawesome/free-solid-svg-icons';
-import api from "../axiosConfig";
+import { faSignInAlt, faLock, faQrcode } from '@fortawesome/free-solid-svg-icons';
+
 
 function Access({ darkMode }) {
   useEffect(() => {

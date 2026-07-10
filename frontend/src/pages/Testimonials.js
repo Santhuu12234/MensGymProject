@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import "./Testimonials.css";
 import { useNavigate } from "react-router-dom";
 import api from "../axiosConfig";
@@ -20,13 +19,11 @@ const Testimonials = ({ darkMode }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-<<<<<<< HEAD
-    axios.get("http://localhost:5000/api/testimonials").then((res) => {
-=======
-    axios.get("/api/testimonials").then((res) => {
->>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
-      setTestimonials(res.data);
-    });
+    api.get("/api/testimonials")
+      .then((res) => {
+        setTestimonials(res.data);
+      })
+      .catch((err) => console.error(err));
 
     const saved = JSON.parse(localStorage.getItem("testimonialForm"));
     if (saved) {
@@ -54,22 +51,19 @@ const Testimonials = ({ darkMode }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const fd = new FormData();
     Object.keys(form).forEach((key) => fd.append(key, form[key]));
-
-<<<<<<< HEAD
-    await axios.post("http://localhost:5000/api/testimonials", fd);
-    const updated = await axios.get("http://localhost:5000/api/testimonials");
-=======
-    await axios.post("/api/testimonials", fd);
-    const updated = await axios.get("/api/testimonials");
->>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
-    setTestimonials(updated.data);
-    setForm({ name: "", role: "", feedback: "", rating: 5, image: null });
-    localStorage.removeItem("testimonialForm");
-    setShowSuccessModal(true);
-    setShowForm(false);
+    try {
+      await api.post("/api/testimonials", fd);
+      const updated = await api.get("/api/testimonials");
+      setTestimonials(updated.data);
+      setForm({ name: "", role: "", feedback: "", rating: 5, image: null });
+      localStorage.removeItem("testimonialForm");
+      setShowSuccessModal(true);
+      setShowForm(false);
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const handleFeedbackClick = () => {
@@ -94,9 +88,9 @@ const Testimonials = ({ darkMode }) => {
           <div className={`testimonial-box ${darkMode ? "dark-box" : ""}`} key={i}>
             <img
               src={
-                t.image.startsWith("http")
+                t.image && t.image.startsWith("http")
                   ? t.image
-                  : `http://localhost:5000${t.image}`
+                  : `/api${t.image}`
               }
               alt={t.name}
               className="testimonial-pic"
@@ -106,7 +100,7 @@ const Testimonials = ({ darkMode }) => {
               <div className="testimonial-line"></div>
             </div>
             <div className="testimonial-role">{t.role}</div>
-            <p className="testimonial-feedback">"{t.feedback}"</p>
+            <p className="testimonial-feedback">{t.feedback}</p>
             <div className="testimonial-stars">
               {"★".repeat(t.rating)}{"☆".repeat(5 - t.rating)}
             </div>
@@ -115,10 +109,7 @@ const Testimonials = ({ darkMode }) => {
       </div>
 
       {!showForm && (
-        <button
-          onClick={handleFeedbackClick}
-          className="give-feedback-btn"
-        >
+        <button onClick={handleFeedbackClick} className="give-feedback-btn">
           Give Feedback
         </button>
       )}
@@ -130,7 +121,6 @@ const Testimonials = ({ darkMode }) => {
         >
           <h3>Submit Your Testimonial</h3>
           <input
-            style={{fontWeight:600}}
             name="name"
             placeholder="Your Name"
             required
@@ -138,7 +128,6 @@ const Testimonials = ({ darkMode }) => {
             onChange={handleChange}
           />
           <input
-          style={{fontWeight:600}}
             name="role"
             placeholder="Your Role"
             required
@@ -146,7 +135,6 @@ const Testimonials = ({ darkMode }) => {
             onChange={handleChange}
           />
           <textarea
-          style={{fontWeight:600}}
             name="feedback"
             placeholder="Your Feedback"
             required
@@ -154,45 +142,45 @@ const Testimonials = ({ darkMode }) => {
             onChange={handleChange}
           />
           <div className="star-rating-input">
-  {[1, 2, 3, 4, 5].map((star) => (
-    <span
-      key={star}
-      className={`star ${
-        (form.tempRating || form.rating) >= star ? "filled" : ""
-      }`}
-      onClick={() => setForm({ ...form, rating: star })}
-      onMouseEnter={() => setForm((prev) => ({ ...prev, tempRating: star }))}
-      onMouseLeave={() =>
-        setForm((prev) => {
-          const updated = { ...prev };
-          delete updated.tempRating;
-          return updated;
-        })
-      }
-    >
-      ★
-    </span>
-  ))}
-</div>
+            {[1, 2, 3, 4, 5].map((star) => (
+              <span
+                key={star}
+                className={`star ${(form.tempRating || form.rating) >= star ? "filled" : ""}`}
+                onClick={() => setForm({ ...form, rating: star })}
+                onMouseEnter={() => setForm((prev) => ({ ...prev, tempRating: star }))}
+                onMouseLeave={() =>
+                  setForm((prev) => {
+                    const updated = { ...prev };
+                    delete updated.tempRating;
+                    return updated;
+                  })
+                }
+              >
+                ★
+              </span>
+            ))}
+          </div>
 
           <div className="custom-file-input">
-  <label htmlFor="file-upload" className="file-label" style={{fontWeight:600}}>
-    Choose Image
-  </label>
-  <span className="file-name" style={{fontWeight:600}}>
-    {form.image ? form.image.name : "No file chosen"}
-  </span>
-  <input
-    type="file"
-    id="file-upload"
-    name="image"
-    accept="image/*"
-    required
-    onChange={handleChange}
-  />
-</div>
+            <label htmlFor="file-upload" className="file-label" style={{ fontWeight: 600 }}>
+              Choose Image
+            </label>
+            <span className="file-name" style={{ fontWeight: 600 }}>
+              {form.image ? form.image.name : "No file chosen"}
+            </span>
+            <input
+              type="file"
+              id="file-upload"
+              name="image"
+              accept="image/*"
+              required
+              onChange={handleChange}
+            />
+          </div>
 
-          <button type="submit" style={{fontWeight:600}}>Submit</button>
+          <button type="submit" style={{ fontWeight: 600 }}>
+            Submit
+          </button>
         </form>
       )}
 
@@ -212,18 +200,13 @@ const Testimonials = ({ darkMode }) => {
             <div className="logout-buttons">
               <button
                 onClick={() =>
-                  navigate("/login", {
-                    state: { from: "/testimonials", darkMode },
-                  })
+                  navigate("/login", { state: { from: "/testimonials", darkMode } })
                 }
                 className="yes-btn"
               >
                 Login
               </button>
-              <button
-                onClick={() => setShowLoginPrompt(false)}
-                className="no-btn"
-              >
+              <button onClick={() => setShowLoginPrompt(false)} className="no-btn">
                 Cancel
               </button>
             </div>
@@ -245,10 +228,7 @@ const Testimonials = ({ darkMode }) => {
             </div>
             <h3>Your testimonial has been submitted successfully!</h3>
             <div className="logout-buttons">
-              <button
-                onClick={() => setShowSuccessModal(false)}
-                className="yes-btn"
-              >
+              <button onClick={() => setShowSuccessModal(false)} className="yes-btn">
                 OK
               </button>
             </div>

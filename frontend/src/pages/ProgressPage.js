@@ -1,8 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React, { useEffect, useState, useCallback } from 'react';
+import api from '../axiosConfig';
 import './ProgressPage.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import api from "../axiosConfig";
 import {
   faDumbbell,
   faWeight,
@@ -20,18 +19,18 @@ const ProgressPage = ({ mode }) => {
   const [data, setData] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null); // no date selected by default
 
-  const fetchData = async () => {
+  const fetchData = useCallback(async () => {
     try {
-      const res = await axios.get(`/api/progress/${userEmail}`);
+      const res = await api.get(`/api/progress/${userEmail}`);
       setData(res.data);
     } catch (err) {
       console.error('Error fetching progress:', err);
     }
-  };
+  }, [userEmail]);
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   // Helper function to get 'YYYY-MM-DD' in local timezone
   const formatDate = (date) => {
@@ -46,28 +45,28 @@ const ProgressPage = ({ mode }) => {
     ? data.filter((d) => formatDate(d.recordedAt) === selectedDate)
     : data;
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      await api.post('/api/progress', {
+        ...form,
+        name: userName,
+        email: userEmail,
+      });
+      setForm({ weight: '', reps: '', sets: '' });
+      fetchData();
+    } catch (err) {
+      console.error('Error saving progress:', err);
+    }
+  };
+
   return (
     <div className={`progress-page-wrapper ${mode === 'dark' ? 'dark' : ''}`}>
-      <h2><FontAwesomeIcon icon={faDumbbell} /> Hello, {userName}! Track Your Progress</h2>
+      <h2>
+        <FontAwesomeIcon icon={faDumbbell} /> Hello, {userName}! Track Your Progress
+      </h2>
 
-      <form className="progress-form" onSubmit={async (e) => {
-        e.preventDefault();
-        try {
-<<<<<<< HEAD
-          await axios.post('http://localhost:5000/api/progress', {
-=======
-          await axios.post('/api/progress', {
->>>>>>> 3f368ca9af31d9632c98283f56ee5097ba977f6c
-            ...form,
-            name: userName,
-            email: userEmail,
-          });
-          setForm({ weight: '', reps: '', sets: '' });
-          fetchData();
-        } catch (err) {
-          console.error('Error saving progress:', err);
-        }
-      }}>
+      <form className="progress-form" onSubmit={handleSubmit}>
         <div>
           <input
             type="number"
@@ -91,7 +90,9 @@ const ProgressPage = ({ mode }) => {
             required
           />
         </div>
-        <button type="submit"><FontAwesomeIcon icon={faSave} /> Save Progress</button>
+        <button type="submit">
+          <FontAwesomeIcon icon={faSave} /> Save Progress
+        </button>
       </form>
 
       <div className="date-filter-wrapper">
@@ -107,10 +108,10 @@ const ProgressPage = ({ mode }) => {
       </div>
 
       <h3>
-        <FontAwesomeIcon icon={faList} />{" "}
+        <FontAwesomeIcon icon={faList} />{' '}
         {selectedDate
           ? `Your Progress on ${new Date(selectedDate).toLocaleDateString()}`
-          : "All Your Progress"}
+          : 'All Your Progress'}
       </h3>
 
       {filteredData.length === 0 ? (
@@ -138,7 +139,9 @@ const ProgressPage = ({ mode }) => {
             </tbody>
           </table>
 
-          <h3><FontAwesomeIcon icon={faChartBar} /> Weight Progress</h3>
+          <h3>
+            <FontAwesomeIcon icon={faChartBar} /> Weight Progress
+          </h3>
           {filteredData.map((d) => (
             <div key={d._id} className="progress-bar-entry">
               <strong>
